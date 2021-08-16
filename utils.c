@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "utils.h"
 #include "constant.h"
 //-----------------------------------------------------------------------------
@@ -16,5 +17,6 @@ void utils_get_string_info(const char *message, char *str)
 {
     printf("%s", message);
     fgets(str,MAX_INPUT_STRING_LENGTH,stdin);
+    str[ strlen(str)-1 ] = '\0';
 }
 //-----------------------------------------------------------------------------

@@ -7,9 +7,12 @@ SOURCES += \
         course.c \
         main.c \
         school.c \
-        student.c
+        student.c \
+        utils.c
 
 HEADERS += \
+    constant.h \
     course.h \
     school.h \
-    student.h
+    student.h \
+    utils.h
