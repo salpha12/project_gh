@@ -4,19 +4,19 @@
 #include "constant.h"
 //-----------------------------------------------------------------------------
 
-int utils_get_int_info(const char * message)
+void utils_get_int_info(const char * message, int * input_int)
 {
-    int num;
     printf("%s",message);
-    scanf("%d", &num);
-    return num;
+    scanf("%d", input_int);
 }
 //-----------------------------------------------------------------------------
 
-void utils_get_string_info(const char *message, char *str)
+void utils_get_string_info(const char *message, char * input_string)
 {
     printf("%s", message);
-    fgets(str,MAX_INPUT_STRING_LENGTH,stdin);
-    str[ strlen(str)-1 ] = '\0';
+    fgets(input_string,MAX_INPUT_STRING_LENGTH,stdin);
+
+    // handling of newline character \n
+    input_string[ strlen(input_string)-1 ] = '\0';
 }
 //-----------------------------------------------------------------------------
