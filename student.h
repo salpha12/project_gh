@@ -9,11 +9,12 @@ typedef struct
     char last_name[MAX_INPUT_STRING_LENGTH];
     char mobile_num[MAX_INPUT_STRING_LENGTH];
     char Email[MAX_INPUT_STRING_LENGTH];
-    int st_courses;
+    int courses_count;
     course_t * cs;
 }student_t;
 
-void ReadStudentDetails(student_t *s1);
-void PrintStudentDetails(student_t *s1);
+void student_read_details(student_t * student);
+void student_print_details(student_t * student);
+void student_free(student_t * student);
 
 #endif // __STUDENT_H_

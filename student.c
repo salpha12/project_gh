@@ -1,39 +1,75 @@
 #include <stdio.h>
-#include "student.h"
 #include <stdlib.h>
+#include "student.h"
+#include "utils.h"
+//-----------------------------------------------------------------------------
 
-
-//#3 read studnts data
-void  ReadStudentDetails(student_t * s1)
+void student_read_details(student_t *student)
 {
-    printf("\nEnter First Name: ");
-    gets(s1->first_name);//dummy
-    gets(s1->first_name);
+    fflush(stdin);
 
-    printf("Enter Last Name:");
-    gets(s1->last_name);
+    utils_get_string_info("\nEnter First Name: ", student->first_name);
+    utils_get_string_info("Enter Last Name: ", student->last_name);
+    utils_get_string_info("Enter mobile No#: ", student->mobile_num);
+    utils_get_string_info("Enter Email: ", student->Email);
 
-    printf("Enter mobile No#: ");
-    gets(s1->mobile_num);
+    // The student must have one course at least
+    student->courses_count = 0;
+    while (student->courses_count <= 0)
+    {
+        utils_get_int_info("Enter Number of Courses taken by the Student: ",
+                           &student->courses_count);
+    }
 
-    printf("Enter Email: ");
-    scanf("%s", s1->Email);
+    student->cs = (course_t *) malloc(student->courses_count *
+                                      sizeof (course_t));
 
-    printf("Enter Number of Courses taken by the Student: ");
-    scanf("%d",&(s1->st_courses));
-
-    //Error #8 Updated "allocation of memory for the courses is done here"
-    s1->cs = (course_t *) malloc(s1->st_courses * sizeof (course_t));
+    for (int index = 0; index < student->courses_count; ++index)
+    {
+        course_read_details(&student->cs[index]);
+    }
 }
+//-----------------------------------------------------------------------------
 
-
-//#4 print students data
-void PrintStudentDetails(student_t *s1)
+void student_print_details(student_t * student)
 {
-    printf("\n======================================================================================");
-    printf(
-                "\nFull Name: %s %s \t Mobile No: %s \t Email: %s\t #of Courses: %d",
-                s1->first_name, s1->last_name, s1->mobile_num, s1->Email,s1->st_courses
-                );
-    printf("\n======================================================================================");
+    utils_print_line();
+
+    printf("\nFull Name: %s %s \t Mobile No: %s \t Email: %s\t #of Courses: %d",
+           student->first_name, student->last_name, student->mobile_num,
+           student->Email,student->courses_count);
+
+    utils_print_line();
+
+    int total_points = 0;
+    int total_credit = 0;
+
+    for (int index = 0; index < student->courses_count; ++index)
+    {
+        course_t * temp = &student->cs[index];
+        course_print_details(temp);
+        total_points += temp->course_grade * temp->course_credit;
+        total_credit += temp->course_credit;
+    }
+
+    float gpa = ((5.0 * total_points)/(total_credit*100));
+
+    utils_print_line();
+    printf("\nStudent's GPA = %0.3lf out of 5", gpa);
+    utils_print_line();
 }
+//-----------------------------------------------------------------------------
+
+void student_free(student_t * student)
+{
+    // free all courses dynamic memory of the student
+    for (int index = 0; index < student->courses_count; ++index)
+    {
+        course_t * temp = &student->cs[index];
+        free(temp);
+    }
+
+    // free the student dynamic memory
+    free(student);
+}
+//-----------------------------------------------------------------------------
