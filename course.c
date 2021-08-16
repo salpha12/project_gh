@@ -55,3 +55,12 @@ void PrintCourseDetails(course_t * cs)
     printf("\nCourse: %s \t Instructor: %s \t Credits: %d hrs \t Grade: %d/100",
            cs->course_name, cs->instructor, cs->course_credit, cs->course_grade);
 }
+
+
+
+
+void course_read_details(course_t *course)
+{
+
+}
+//-----------------------------------------------------------------------------

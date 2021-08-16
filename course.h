@@ -13,7 +13,7 @@
 #define __COURSE_H__
 
 
-#define MAX_INPUT_STRING_LENGTH     (50)
+#include "constant.h"
 
 typedef struct
 {
@@ -28,5 +28,9 @@ void ReadCourseDetails(course_t * cs);
 void PrintCourseDetails(course_t * cs);
 int get_int_info(char statement[50]);
 void get_char_info(char statement[50], char str[25]);
+
+
+void course_read_details(course_t * course);
+void course_print_details(course_t * course);
 
 #endif //__COURSE_H__
