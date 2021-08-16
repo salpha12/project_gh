@@ -62,32 +62,33 @@ void PrintCourseDetails(course_t * cs)
 
 void course_read_details(course_t * course)
 {
-    fgets(course->course_name,2,stdin); //Dummy Operation
+//    fgets(course->course_name,2,stdin); //Dummy Operation
+    fflush(stdin);
 
-    utils_get_string_info("\nEnter course Name: ", (char *)&course->course_name);
-    //handling of newline character \n
-    cs->course_name[strlen(cs->course_name)-1]='\0';
+    utils_get_string_info("Enter course Name: ", course->course_name);
+    utils_get_string_info("Enter The Instructor Name: ", course->instructor);
 
-    get_char_info("Enter The Instructor Name: ", (char *)&cs->instructor);
-    //handling of newline character \n
-    cs->instructor[strlen(cs->instructor)-1]='\0';
-
-    cs->course_grade = get_int_info("Enter student grade: ");
-
-    //Error-handling for course grade
-    if(cs->course_grade < 0 || cs->course_grade > 100)
+    // Get Grade and Handle Error of course grade
+    course->course_grade = 0;
+    while (course->course_grade <= 0 || course->course_grade > 100)
     {
-        printf("Enterned Course grade is invalid! Please try again\n");
-        cs->course_grade = get_int_info("Enter student grade: ");
+        utils_get_int_info("Enter student grade: ",&course->course_grade);
     }
-    cs->course_credit = get_int_info("Enter course credit hours (2,3,4): ");
 
-    //Error-handling for course credit
-    if(cs->course_credit != 2 && cs->course_credit != 3 && cs->course_credit != 4 )
+    // Get Credit and Handle Error of Credit
+    course->course_credit = 0;
+    while (course->course_credit < 2 || course->course_credit > 4)
     {
-        printf("Enterned Course Credit is invalid! Please try again!\n");
-        cs->course_credit = get_int_info("Enter course credit hours (2,3,4): ");
-
+        utils_get_int_info("Enter course credit hours (2,3,4): ",
+                           &course->course_credit);
     }
+}
+//-----------------------------------------------------------------------------
+
+void course_print_details(course_t * course)
+{
+    printf("\nCourse: %s \t Instructor: %s \t Credits: %d hrs \t Grade: %d/100",
+           course->course_name, course->instructor, course->course_credit,
+           course->course_grade);
 }
 //-----------------------------------------------------------------------------
